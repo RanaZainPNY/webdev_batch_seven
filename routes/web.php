@@ -1,7 +1,24 @@
 <?php
 
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+use App\Http\Controllers\WebsiteController;
+
+
+// Admin Routes
+Route::get("/admin/master", [WebsiteController::class, 'adminMasterPage'])->name('admin-master');
+Route::get("/admin/products", [ProductController::class, 'productindex'])->name('admin-products');
+
+
+// Website Routes
+Route::get('/web/master', [WebsiteController::class, 'webMasterPage'])->name('web-master');
+Route::get('/web/index', [WebsiteController::class, 'webIndexPage'])->name('web-index');
+Route::get('/web/shop', [WebsiteController::class, 'webShopPage'])->name('web-shop');
+Route::get('/web/cart', [WebsiteController::class, 'webCartPage'])->name('web-cart');
+Route::get('/web/checkout', [WebsiteController::class, 'webCheckoutPage'])->name('web-checkout');
+Route::get('/web/contact', [WebsiteController::class, 'webContact'])->name('web-contact');
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -21,9 +38,12 @@ Route::get('/fahad/{id}/book/{bookname?}', action: function ($id, $bookname = ''
 });
 
 // Query Params
-Route::get('/fahad', function (Request $request) {
-    return view('welcome');
-});
+// Route::get('/fahad', function (Request $request) {
+//     return view('welcome');
+// });
+
+Route::get('/fahad', [WebsiteController::class, 'fahadPage'])->name('web-fahad');
+
 
 // Post Method
 Route::post('/submitform', function (Request $request) {
