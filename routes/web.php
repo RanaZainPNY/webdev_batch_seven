@@ -9,6 +9,11 @@ use App\Http\Controllers\WebsiteController;
 // Admin Routes
 Route::get("/admin/master", [WebsiteController::class, 'adminMasterPage'])->name('admin-master');
 Route::get("/admin/products", [ProductController::class, 'productindex'])->name('admin-products');
+Route::get("/admin/create/product", [ProductController::class, 'createProductPage'])->name('admin-create-products');
+Route::post("/admin/store/product", [ProductController::class, 'storeProductPage'])->name('admin-products-store');
+Route::get("/admin/delete/product/{id}", [ProductController::class, 'removeProduct'])->name('admin-products-remove');
+Route::get("/admin/edit/form/{id}", [ProductController::class, 'editProductForm'])->name('admin-edit-product-form');
+Route::post("/admin/update/product/{id}", [ProductController::class, 'updateProduct'])->name('admin-update-product');
 
 
 // Website Routes
@@ -21,7 +26,7 @@ Route::get('/web/contact', [WebsiteController::class, 'webContact'])->name('web-
 
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('web-index');
 });
 
 
