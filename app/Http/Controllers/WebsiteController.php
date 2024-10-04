@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Product;
 
 class WebsiteController extends Controller
 {
@@ -29,13 +30,16 @@ class WebsiteController extends Controller
 
     public function webShopPage()
     {
-
-        return view('web.shop');
+        $products = Product::all();
+        return view('web.shop', ['products' => $products]);
     }
     public function webCartPage()
     {
 
-        return view('web.cart');
+        $products = session()->get('cart');
+        // dd($cartproducts);
+
+        return view('web.cart', ['products', $products]);
     }
     public function webCheckoutPage()
     {

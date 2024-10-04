@@ -50,6 +50,7 @@
                         <label for="image" class="form-label h5">Image</label>
                         <input type="file" name="image" id="image" class="form-control form-control-lg">
                     </div>
+
                     <div class="d-grid">
                         <button type="submit" class="btn btn-primary btn-lg">Submit</button>
                     </div>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 
 class ProductController extends Controller
 {
@@ -19,13 +20,27 @@ class ProductController extends Controller
 
     public function updateProduct($id, Request $request)
     {
-        // dump($id);
         $product = Product::findOrFail($id);
         $product->name = $request->name;
         $product->price = $request->price;
         $product->sku = $request->sku;
         $product->description = $request->description;
         $product->save();
+
+        if ($request->image != "") {
+            // delete old image
+            File::delete(public_path('uploads/products/' . $product->image));
+
+            // Create new image file name
+            $image = $request->image;
+            $ext = $image->getClientOriginalExtension();
+            $imageName = time() . '.' . $ext; // unique Image Name
+
+            //save image to the public directory
+            $image->move(public_path('uploads/products/'), $imageName);
+            $product->image = $imageName;
+            $product->save();
+        }
 
         return redirect()->route('admin-products');
     }
@@ -77,8 +92,13 @@ class ProductController extends Controller
 
     public function removeProduct($id)
     {
-        // dump($id);
         $product = Product::findOrFail($id);
+
+        if ($product->image != "") {
+            // delete associated image file
+            File::delete(public_path('/uploads/products/' . $product->image));
+        }
+
         $product->delete();
 
         return redirect()->route('admin-products');

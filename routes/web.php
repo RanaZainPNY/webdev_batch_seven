@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
@@ -24,6 +25,12 @@ Route::get('/web/cart', [WebsiteController::class, 'webCartPage'])->name('web-ca
 Route::get('/web/checkout', [WebsiteController::class, 'webCheckoutPage'])->name('web-checkout');
 Route::get('/web/contact', [WebsiteController::class, 'webContact'])->name('web-contact');
 
+
+// cart routes
+Route::get('/addtocart/{id}', [CartController::class, 'addtocart'])->name('add-to-cart');
+Route::get('/remove/{id}', [CartController::class, 'removefromcart'])->name('remove-from-cart');
+Route::get('/cartstatus', [CartController::class, 'cartstatus'])->name('cart-status');
+Route::post('/placeorder', [CartController::class, 'placeorder'])->name('cart-place-order');
 
 Route::get('/', function () {
     return redirect()->route('web-index');
